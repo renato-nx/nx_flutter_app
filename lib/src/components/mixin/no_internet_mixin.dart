@@ -6,18 +6,16 @@ import 'package:nx_flutter_app/src/utils/connection_util.dart';
 mixin NoInternetMixin<T extends StatefulWidget> on State<T> {
   bool isInternetBannerOn = false;
 
-  late final ConnectionUtil conectivity;
+  final ConnectionUtil conectivity = ConnectionUtil.getInstance();
   late StreamSubscription connectivityStream;
 
   @override
   void initState() {
+    conectivity.connectionChange.listen(_connectionChange);
     super.initState();
-    conectivity = ConnectionUtil.getInstance();
-    conectivity.initialize();
-    connectivityStream = conectivity.connectionChange.listen(_connectionChange);
   }
 
-  void _connectionChange(dynamic hasConnection) async {
+  void _connectionChange(dynamic hasConnection) {
     if (!hasConnection) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showMaterialBanner(
