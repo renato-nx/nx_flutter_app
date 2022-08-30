@@ -4,21 +4,21 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:nx_flutter_app/src/core/models/produto.dart';
 import 'package:nx_flutter_app/src/core/services/produto/produto_service.dart';
-import 'package:nx_flutter_app/src/utils/db_util.dart';
+import 'package:nx_flutter_app/src/data/database.dart';
 
 class ProdutoLocalService with ChangeNotifier implements ProdutoService {
   List<Produto> _produtos = [];
 
   @override
   Future<void> loadProdutos() async {
-    final dataList = await DbUtil.getData(DbUtil.tableProdutos);
+    final dataList = await Database.getData(Database.tableProdutos);
     _produtos = dataList
         .map((item) => Produto(
-              id: item[DbUtil.produtoId],
-              nome: item[DbUtil.produtoNome],
-              descricao: item[DbUtil.produtoDescricao],
-              preco: item[DbUtil.produtoPreco],
-              imagem: File(item[DbUtil.produtoImagem]),
+              id: item[Database.produtoId],
+              nome: item[Database.produtoNome],
+              descricao: item[Database.produtoDescricao],
+              preco: item[Database.produtoPreco],
+              imagem: File(item[Database.produtoImagem]),
             ))
         .toList();
     notifyListeners();
@@ -55,12 +55,12 @@ class ProdutoLocalService with ChangeNotifier implements ProdutoService {
   @override
   Future<void> addProduto(Produto produto) async {
     _produtos.add(produto);
-    DbUtil.insert(DbUtil.tableProdutos, {
-      DbUtil.produtoId: produto.id,
-      DbUtil.produtoNome: produto.nome,
-      DbUtil.produtoDescricao: produto.descricao,
-      DbUtil.produtoPreco: produto.preco,
-      DbUtil.produtoImagem: produto.imagem.path,
+    Database.insert(Database.tableProdutos, {
+      Database.produtoId: produto.id,
+      Database.produtoNome: produto.nome,
+      Database.produtoDescricao: produto.descricao,
+      Database.produtoPreco: produto.preco,
+      Database.produtoImagem: produto.imagem.path,
     });
     notifyListeners();
   }
@@ -70,16 +70,16 @@ class ProdutoLocalService with ChangeNotifier implements ProdutoService {
     int index = _produtos.indexWhere((p) => p.id == produto.id);
 
     if (index >= 0) {
-      DbUtil.update(
-        DbUtil.tableProdutos,
+      Database.update(
+        Database.tableProdutos,
         {
-          DbUtil.produtoId: produto.id,
-          DbUtil.produtoNome: produto.nome,
-          DbUtil.produtoDescricao: produto.descricao,
-          DbUtil.produtoPreco: produto.preco,
-          DbUtil.produtoImagem: produto.imagem.path,
+          Database.produtoId: produto.id,
+          Database.produtoNome: produto.nome,
+          Database.produtoDescricao: produto.descricao,
+          Database.produtoPreco: produto.preco,
+          Database.produtoImagem: produto.imagem.path,
         },
-        DbUtil.produtoId,
+        Database.produtoId,
       );
 
       _produtos[index] = produto;
@@ -98,9 +98,9 @@ class ProdutoLocalService with ChangeNotifier implements ProdutoService {
       _produtos.remove(produto);
       notifyListeners();
 
-      DbUtil.remove(
-        DbUtil.tableProdutos,
-        DbUtil.produtoId,
+      Database.remove(
+        Database.tableProdutos,
+        Database.produtoId,
         produto.id,
       );
     }

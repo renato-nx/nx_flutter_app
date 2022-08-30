@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:path/path.dart' as path;
 
-class DbUtil {
+class Database {
   static const String _dbName = 'avive.db';
   static const int _dbVersion = 1;
 
@@ -40,7 +40,7 @@ class DbUtil {
   }
 
   static Future<void> insert(String table, Map<String, Object> data) async {
-    final db = await DbUtil.database();
+    final db = await Database.database();
     await db.insert(
       table,
       data,
@@ -50,7 +50,7 @@ class DbUtil {
 
   static Future<void> update(
       String table, Map<String, Object?> values, String columnName) async {
-    final db = await DbUtil.database();
+    final db = await Database.database();
     await db.update(
       table,
       values,
@@ -60,13 +60,13 @@ class DbUtil {
   }
 
   static Future<List<Map<String, dynamic>>> getData(String table) async {
-    final db = await DbUtil.database();
+    final db = await Database.database();
     return db.query(table);
   }
 
   static Future<Future<int>> remove(
       String table, String columnName, String columnValue) async {
-    final db = await DbUtil.database();
+    final db = await Database.database();
     return db.delete(
       table,
       where: '$columnName = ?',

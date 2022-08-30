@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nx_flutter_app/src/core/models/consulta.dart';
-import 'package:nx_flutter_app/src/utils/db_util.dart';
+import 'package:nx_flutter_app/src/data/database.dart';
 
 class ConsultaProvider with ChangeNotifier {
   final Map<DateTime, List<Consulta>> _consultas = {};
@@ -16,14 +16,14 @@ class ConsultaProvider with ChangeNotifier {
   Future<void> loadConsultas() async {
     _consultas.clear();
 
-    final dataList = await DbUtil.getData(DbUtil.tableConsultas);
+    final dataList = await Database.getData(Database.tableConsultas);
     final list = dataList
         .map((item) => Consulta(
-              id: item[DbUtil.consultaId],
-              data: DateTime.parse(item[DbUtil.consultaData]),
-              hora: item[DbUtil.consultaHora],
-              cliente: item[DbUtil.consultaCliente],
-              descricao: item[DbUtil.consultaDescricao],
+              id: item[Database.consultaId],
+              data: DateTime.parse(item[Database.consultaData]),
+              hora: item[Database.consultaHora],
+              cliente: item[Database.consultaCliente],
+              descricao: item[Database.consultaDescricao],
             ))
         .toList();
 
@@ -76,12 +76,12 @@ class ConsultaProvider with ChangeNotifier {
       _consultas[selectedDay] = [newConsulta];
     }
 
-    await DbUtil.insert(DbUtil.tableConsultas, {
-      DbUtil.consultaId: newConsulta.id,
-      DbUtil.consultaData: newConsulta.data.toString(),
-      DbUtil.consultaHora: newConsulta.hora,
-      DbUtil.consultaCliente: newConsulta.cliente,
-      DbUtil.consultaDescricao: newConsulta.descricao,
+    await Database.insert(Database.tableConsultas, {
+      Database.consultaId: newConsulta.id,
+      Database.consultaData: newConsulta.data.toString(),
+      Database.consultaHora: newConsulta.hora,
+      Database.consultaCliente: newConsulta.cliente,
+      Database.consultaDescricao: newConsulta.descricao,
     });
     notifyListeners();
   }
