@@ -12,6 +12,10 @@ class Store {
     return saveString(key, jsonEncode(value));
   }
 
+  static Future<bool> saveList(String key, List<dynamic> value) async {
+    return saveString(key, jsonEncode(value));
+  }
+
   static Future<String> getString(
     String key, [
     String defaultValue = '',
@@ -25,6 +29,14 @@ class Store {
       return jsonDecode(await getString(key));
     } catch (_) {
       return {};
+    }
+  }
+
+  static Future<List<dynamic>> getList(String key) async {
+    try {
+      return jsonDecode(await getString(key));
+    } catch (_) {
+      return [];
     }
   }
 

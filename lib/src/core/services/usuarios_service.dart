@@ -1,10 +1,10 @@
-import 'package:dio/dio.dart';
+import 'package:nx_flutter_app/src/core/services/custom_dio.dart';
 import 'package:nx_flutter_app/src/data/store.dart';
 import 'package:openapi/openapi.dart';
 
 class UsuariosService {
   final usuariosApi = UsuariosApi(
-    Dio(BaseOptions(baseUrl: Openapi.basePath)),
+    CustomDio(),
     standardSerializers,
   );
 
