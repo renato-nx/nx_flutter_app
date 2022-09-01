@@ -55,9 +55,7 @@ class TabDadosPessoaisPage extends StatelessWidget {
               ),
               TextFormField(
                 key: const ValueKey('login'),
-                onSaved: (login) {
-                  formData['credencial'] = {'login': login ?? ''};
-                },
+                onSaved: (login) => formData['login'] = login ?? '',
                 decoration: const InputDecoration(
                   labelText: 'Login',
                 ),
@@ -71,7 +69,7 @@ class TabDadosPessoaisPage extends StatelessWidget {
               ),
               TextFormField(
                 key: const ValueKey('cpf'),
-                onSaved: (cpf) => formData['cpf'] = cpf ?? '',
+                onSaved: (cpf) => formData['cpf'] = maskCpf.getUnmaskedText(),
                 decoration: const InputDecoration(
                   labelText: 'CPF',
                 ),

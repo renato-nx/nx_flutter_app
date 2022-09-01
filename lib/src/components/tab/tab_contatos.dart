@@ -32,7 +32,7 @@ class TabContatosPage extends StatelessWidget {
               TextFormField(
                 key: const ValueKey('telefone'),
                 onSaved: (telefone) {
-                  formData['telefone'] = telefone ?? '';
+                  formData['telefone'] = maskTelefone.getUnmaskedText();
                 },
                 decoration: const InputDecoration(
                   labelText: 'Telefone Comercial',
@@ -58,7 +58,7 @@ class TabContatosPage extends StatelessWidget {
               TextFormField(
                 key: const ValueKey('celular'),
                 onSaved: (celular) {
-                  formData['celular'] = celular ?? '';
+                  formData['celular'] = maskCelular.getUnmaskedText();
                 },
                 decoration: const InputDecoration(
                   labelText: 'Celular',

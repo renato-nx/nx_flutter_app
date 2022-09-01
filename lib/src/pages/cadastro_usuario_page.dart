@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:nx_flutter_app/src/components/tab/tab_contatos.dart';
 import 'package:nx_flutter_app/src/components/tab/tab_dados_pessoais.dart';
@@ -31,19 +32,25 @@ class _CadastroUsuariosPageState extends State<CadastroUsuariosPage>
   int? invalidTab;
 
   final formData = <String, dynamic>{
-    'nivel': {'id': 4},
-    'cliente': {'id': 24},
+    'idNivel': 4,
+    'idCliente': 24,
+    'senha': ''
   };
+
+  void _showMsg(String msg, Color color) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        duration: const Duration(seconds: 2),
+        backgroundColor: color,
+      ),
+    );
+  }
 
   void _submitForm() async {
     if (invalidTab != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Faltou preencher alguns campos.'),
-          duration: Duration(seconds: 2),
-          backgroundColor: Colors.red,
-        ),
-      );
+      _showMsg('Faltou preencher alguns campos.', Colors.red);
       _tabController.animateTo(invalidTab!);
       invalidTab = null;
 
@@ -51,15 +58,40 @@ class _CadastroUsuariosPageState extends State<CadastroUsuariosPage>
     }
 
     try {
-      await UsuariosService().postUsuario(formData as UsuarioCreateRequest);
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Erro ao cadastrar usuário'),
-          duration: Duration(seconds: 2),
-          backgroundColor: Colors.red,
-        ),
+      final usuario = UsuarioCreateRequest(
+        (builder) => builder
+          ..nome = formData['nome']
+          ..email = formData['email']
+          ..cpf = formData['cpf']
+          ..rg = formData['rg']
+          ..telefone = formData['telefone']
+          ..ramal = formData['ramal']
+          ..celular = formData['celular']
+          ..visualizarImprimirRtpi = formData['visualizarImprimirRtpi']
+          ..criarEditarRtpi = formData['criarEditarRtpi']
+          ..criarEditarCadastro = formData['criarEditarCadastro']
+          ..imprimirEtiqueta = formData['imprimirEtiqueta']
+          ..credencial.login = formData['login']
+          ..credencial.senha = formData['senha']
+          ..nivel.id = 4
+          ..cliente.id = 24,
       );
+      await UsuariosService().postUsuario(usuario);
+
+      _showMsg('Usuário cadastrado com sucesso', Colors.greenAccent);
+
+      if (!mounted) return;
+      Navigator.of(context).pop();
+    } on DioError catch (error) {
+      String? errorMessage;
+      if (error.response?.data['errors'] != null) {
+        final errorsList = error.response?.data['errors'] as List;
+
+        for (var error in errorsList) {
+          errorMessage = "$error\n${errorMessage ?? ''}";
+        }
+      }
+      _showMsg(errorMessage ?? 'Erro ao cadastrar usuário', Colors.red);
     }
   }
 
@@ -68,7 +100,6 @@ class _CadastroUsuariosPageState extends State<CadastroUsuariosPage>
 
     if (!isValid && _tabController.indexIsChanging) {
       previousIndex = _tabController.previousIndex;
-      // _tabController.animateTo(previousIndex!); // Volta para a aba anterior
       return isValid;
     }
 

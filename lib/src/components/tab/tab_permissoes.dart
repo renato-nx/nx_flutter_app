@@ -4,14 +4,12 @@ class TabPermissoesPage extends StatefulWidget {
   final Map<String, dynamic> formData;
   final GlobalKey<FormState> formKey;
   final Function submit;
-  // final int? invalidTab;
 
   const TabPermissoesPage({
     Key? key,
     required this.formData,
     required this.formKey,
     required this.submit,
-    // required this.invalidTab,
   }) : super(key: key);
 
   @override
@@ -19,20 +17,6 @@ class TabPermissoesPage extends StatefulWidget {
 }
 
 class _TabPermissoesPageState extends State<TabPermissoesPage> {
-  // void submitHandler() {
-  //   if (widget.invalidTab != null) {
-  //     widget.submit();
-  //   } else {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text('Falta preencher alguns campos.'),
-  //         duration: Duration(seconds: 2),
-  //         backgroundColor: Colors.red,
-  //       ),
-  //     );
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,40 +32,40 @@ class _TabPermissoesPageState extends State<TabPermissoesPage> {
                   children: [
                     CheckboxListTile(
                       title: const Text('Visualizar / Imprimir RTPI'),
-                      value: widget.formData['visualizarImprimirRTPI'] ?? false,
+                      value: widget.formData['visualizarImprimirRtpi'] ?? false,
                       onChanged: (value) {
                         setState(() {
-                          widget.formData['visualizarImprimirRTPI'] = value!;
+                          widget.formData['visualizarImprimirRtpi'] = value!;
                         });
                       },
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                     CheckboxListTile(
                       title: const Text('Criar / Editar RTPI'),
-                      value: widget.formData['criarEditarRTPI'] ?? false,
+                      value: widget.formData['criarEditarRtpi'] ?? false,
                       onChanged: (value) {
                         setState(() {
-                          widget.formData['criarEditarRTPI'] = value!;
+                          widget.formData['criarEditarRtpi'] = value!;
                         });
                       },
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                     CheckboxListTile(
                       title: const Text('Criar / Editar Cadastros'),
-                      value: widget.formData['criarEditarCadastros'] ?? false,
+                      value: widget.formData['criarEditarCadastro'] ?? false,
                       onChanged: (value) {
                         setState(() {
-                          widget.formData['criarEditarCadastros'] = value!;
+                          widget.formData['criarEditarCadastro'] = value!;
                         });
                       },
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                     CheckboxListTile(
                       title: const Text('Imprimir Etiquetas'),
-                      value: widget.formData['imprimirEtiquetas'] ?? false,
+                      value: widget.formData['imprimirEtiqueta'] ?? false,
                       onChanged: (value) {
                         setState(() {
-                          widget.formData['imprimirEtiquetas'] = value!;
+                          widget.formData['imprimirEtiqueta'] = value!;
                         });
                       },
                       controlAffinity: ListTileControlAffinity.leading,
