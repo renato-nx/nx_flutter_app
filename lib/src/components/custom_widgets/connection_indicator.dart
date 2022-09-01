@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nx_flutter_app/src/utils/connection_util.dart';
+import 'package:nx_flutter_app/src/core/services/connection_service.dart';
 
 class ConnectionIndicator extends StatefulWidget {
   const ConnectionIndicator({Key? key}) : super(key: key);
@@ -9,7 +9,7 @@ class ConnectionIndicator extends StatefulWidget {
 }
 
 class _ConnectionIndicatorState extends State<ConnectionIndicator> {
-  ConnectionUtil connectionStatus = ConnectionUtil.getInstance();
+  ConnectionService connectionStatus = ConnectionService.getInstance();
   bool hasInternetConnection = false;
 
   @override

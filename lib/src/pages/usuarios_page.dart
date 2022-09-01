@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nx_flutter_app/src/components/custom_widgets/app_drawer.dart';
 import 'package:nx_flutter_app/src/components/custom_widgets/info_widget.dart';
+import 'package:nx_flutter_app/src/core/services/http_requests_cache.dart';
 import 'package:nx_flutter_app/src/core/services/usuarios_service.dart';
 import 'package:nx_flutter_app/src/utils/app_routes.dart';
 
@@ -21,6 +22,12 @@ class _UsuariosPageState extends State<UsuariosPage> {
       appBar: AppBar(
         title: const Text('Usuários'),
         actions: [
+          IconButton(
+            onPressed: () async {
+              await HttpRequestsCache().syncData();
+            },
+            icon: const Icon(Icons.sync),
+          ),
           IconButton(
             onPressed: () {
               Navigator.of(context).pushNamed(AppRoutes.cadastroUsuario);

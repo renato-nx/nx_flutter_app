@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:nx_flutter_app/src/utils/connection_util.dart';
+import 'package:nx_flutter_app/src/core/services/connection_service.dart';
 
 mixin NoInternetMixin<T extends StatefulWidget> on State<T> {
   bool isInternetBannerOn = false;
 
-  final ConnectionUtil conectivity = ConnectionUtil.getInstance();
+  final ConnectionService conectivity = ConnectionService.getInstance();
   late StreamSubscription connectivityStream;
 
   @override
