@@ -1,42 +1,21 @@
 import 'package:dio/dio.dart';
+import 'package:nx_flutter_app/src/core/services/http_requests_cache.dart';
 import 'package:nx_flutter_app/src/data/store.dart';
 
 class CacheInterceptor implements InterceptorsWrapper {
-  final _datetime = DateTime.now().toIso8601String();
-  final _methodsToSave = ['POST', 'PUT', 'DELETE', 'PATCH'];
-
-  Future<void> _saveToCache(RequestOptions options) async {
-    final requestsMap = await Store.getMap("${options.method}-${options.path}");
-
-    final request = {
-      _datetime: {
-        "method": options.method,
-        "baseUrl": options.baseUrl,
-        "data": options.data,
-      },
-    };
-
-    requestsMap.addEntries(request.entries);
-
-    await Store.saveMap("${options.method}-${options.path}", requestsMap);
-  }
-
-  Future<void> _removeFromCache(RequestOptions options) async {
-    final requestsMap = await Store.getMap("${options.method}-${options.path}");
-
-    requestsMap.remove(_datetime);
-
-    await Store.saveMap("${options.method}-${options.path}", requestsMap);
-  }
+  final _sendMethods = ['POST', 'PUT', 'DELETE', 'PATCH'];
+  final datetime = DateTime.now().toIso8601String();
 
   @override
   void onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    if (_methodsToSave.contains(options.method)) {
-      await _saveToCache(options);
+    if (_sendMethods.contains(options.method) &&
+        options.extra['isFromCache'] == null) {
+      await HttpRequestsCache(options).save(datetime);
     }
+
     handler.next(options);
   }
 
@@ -48,8 +27,12 @@ class CacheInterceptor implements InterceptorsWrapper {
       Store.saveList("${options.method}-${options.path}", response.data);
     }
 
-    if (_methodsToSave.contains(options.method)) {
-      await _removeFromCache(options);
+    if (_sendMethods.contains(options.method)) {
+      if (options.extra['isFromCache'] == null) {
+        await HttpRequestsCache(options).remove(datetime);
+      } else {
+        await HttpRequestsCache(options).remove(options.extra['requestKey']);
+      }
     }
 
     handler.resolve(response);
@@ -60,16 +43,36 @@ class CacheInterceptor implements InterceptorsWrapper {
     final options = err.requestOptions;
     final statusCode = err.response?.statusCode;
 
-    if (statusCode != null) {
-      await _removeFromCache(options);
-    }
-
     if (options.method == "GET") {
       final data = await Store.getList("${options.method}-${options.path}");
 
       if (data.isNotEmpty) {
         handler.resolve(Response(requestOptions: options, data: data));
+        return;
       }
     }
+
+    if (statusCode == null) {
+      err.response = Response(
+        requestOptions: options,
+        data: {'message': "Será enviado quando retomar a conexão."},
+      );
+    } else {
+      if (options.extra['isFromCache'] != null) {
+        err.response = Response(
+          requestOptions: options,
+          data: {
+            'message':
+                "Erro ao sincronizar os dados: ${err.response?.data['message']}"
+          },
+        );
+        // Deleta os requests que estão em cache mas possuem erros
+        await HttpRequestsCache(options).remove(options.extra['requestKey']);
+      } else {
+        await HttpRequestsCache(options).remove(datetime);
+      }
+    }
+
+    handler.reject(err);
   }
 }
