@@ -1,5 +1,5 @@
 class AppRoutes {
-  static const authOrHome = 'aoth-or-home';
+  static const authOrHome = '/';
   static const agenda = 'agenda';
   static const pictogramas = 'pictogramas';
   static const usuarios = 'usuarios';

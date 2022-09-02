@@ -28,10 +28,11 @@ class ConnectionService {
 
     if (previousConnection != hasConnection) {
       connectionChangeController.add(hasConnection);
-      if (hasConnection) {
-        debugPrint("Connection service");
-        HttpRequestsCache.syncData();
-      }
+      // Com a task rodando no background, não há necessidade dessa aqui
+      // if (hasConnection) {
+      //   debugPrint("Connection service");
+      //   HttpRequestsCache.syncData();
+      // }
     }
   }
 

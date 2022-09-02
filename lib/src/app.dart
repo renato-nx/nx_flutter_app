@@ -17,7 +17,6 @@ import 'package:nx_flutter_app/src/pages/loja_page.dart';
 import 'package:nx_flutter_app/src/pages/pictogramas_page.dart';
 import 'package:nx_flutter_app/src/pages/produtos_page.dart';
 import 'package:nx_flutter_app/src/pages/signature_page.dart';
-import 'package:nx_flutter_app/src/pages/splash_page.dart';
 import 'package:nx_flutter_app/src/pages/usuarios_page.dart';
 import 'package:nx_flutter_app/src/utils/app_routes.dart';
 import 'package:nx_flutter_app/src/core/services/connection_service.dart';
@@ -63,7 +62,7 @@ class App extends StatelessWidget {
         supportedLocales: const [Locale('pt', 'BR')],
         theme: theme,
         routes: {
-          '/': (context) => const Splash(),
+          // '/': (context) => const Splash(),
           AppRoutes.authOrHome: (context) {
             return const NoInternetWrapper(AuthOrAppPage());
           },
