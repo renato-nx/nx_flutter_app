@@ -90,6 +90,8 @@ class _CadastroUsuariosPageState extends State<CadastroUsuariosPage>
         for (var error in errorsList) {
           errorMessage = "$error\n${errorMessage ?? ''}";
         }
+      } else {
+        errorMessage = error.response?.data['message'];
       }
       _showMsg(errorMessage ?? 'Erro ao cadastrar usuário', Colors.red);
     }
