@@ -4,7 +4,6 @@ import 'package:nx_flutter_app/src/core/services/custom_dio.dart';
 import 'package:nx_flutter_app/src/data/store.dart';
 
 class HttpRequestsCache {
-  final _methods = ['POST', 'PUT', 'DELETE', 'PATCH'];
   late final RequestOptions? _options;
   late final String _requestName;
 
@@ -13,7 +12,7 @@ class HttpRequestsCache {
     _requestName = _options?.method ?? "";
   }
 
-  Future<void> _sendRequest(String requestKey, dynamic request) async {
+  static Future<void> _sendRequest(String requestKey, dynamic request) async {
     debugPrint("\n\nChamou a função sendRequest!\n\n");
 
     try {
@@ -35,9 +34,11 @@ class HttpRequestsCache {
     }
   }
 
-  Future<void> syncData() async {
+  static Future<void> syncData() async {
+    final methods = ['POST', 'PUT', 'DELETE', 'PATCH'];
+
     debugPrint("\n\nChamou a função syncData!\n\n");
-    for (var method in _methods) {
+    for (var method in methods) {
       debugPrint(method);
       final requestsMap = await Store.getMap(method);
 

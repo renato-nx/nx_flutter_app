@@ -30,7 +30,7 @@ class ConnectionService {
       connectionChangeController.add(hasConnection);
       if (hasConnection) {
         debugPrint("Connection service");
-        HttpRequestsCache().syncData();
+        HttpRequestsCache.syncData();
       }
     }
   }

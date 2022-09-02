@@ -24,7 +24,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
         actions: [
           IconButton(
             onPressed: () async {
-              await HttpRequestsCache().syncData();
+              await HttpRequestsCache.syncData();
             },
             icon: const Icon(Icons.sync),
           ),

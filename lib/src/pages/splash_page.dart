@@ -14,7 +14,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
 
-    HttpRequestsCache().syncData().then((_) {
+    HttpRequestsCache.syncData().then((_) {
       Navigator.pushReplacementNamed(context, AppRoutes.authOrHome);
     });
   }
