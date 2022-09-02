@@ -35,8 +35,18 @@ void onStart(ServiceInstance service) async {
   DartPluginRegistrant.ensureInitialized();
 
   if (service is AndroidServiceInstance) {
-    service.setAsBackgroundService();
+    service.on('setAsForeground').listen((event) {
+      service.setAsForegroundService();
+    });
+
+    service.on('setAsBackground').listen((event) {
+      service.setAsBackgroundService();
+    });
   }
+
+  service.on('stopService').listen((event) {
+    service.stopSelf();
+  });
 
   final connectionService = ConnectionService.getInstance();
   connectionService.initialize();
@@ -47,16 +57,13 @@ void onStart(ServiceInstance service) async {
       debugPrint("Sync data");
     }
   });
-
-  service.on('stopService').listen((event) {
-    service.stopSelf();
-  });
 }
 
 // to ensure this is executed
 // run app from xcode, then from xcode menu, select Simulate Background Fetch
 bool onIosBackground(ServiceInstance service) {
-  print("TASK RUNNING ON IOS BACKGROUND");
+  WidgetsFlutterBinding.ensureInitialized();
+  debugPrint('FLUTTER BACKGROUND FETCH');
 
   return true;
 }
