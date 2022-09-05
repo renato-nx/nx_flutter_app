@@ -22,6 +22,8 @@ Future<void> initializeService() async {
     androidConfiguration: AndroidConfiguration(
       onStart: onStart,
       isForegroundMode: true,
+      foregroundServiceNotificationTitle: "NX FLutter App",
+      foregroundServiceNotificationContent: "Executando em segundo plano",
     ),
     iosConfiguration: IosConfiguration(
       onForeground: onStart,
@@ -42,6 +44,11 @@ void onStart(ServiceInstance service) async {
     service.on('setAsBackground').listen((event) {
       service.setAsBackgroundService();
     });
+
+    service.setForegroundNotificationInfo(
+      title: "NX Flutter App",
+      content: "Executando em segundo plano",
+    );
   }
 
   service.on('stopService').listen((event) {
