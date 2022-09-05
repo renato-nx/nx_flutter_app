@@ -5,8 +5,9 @@ import 'package:nx_flutter_app/src/components/tab/tab_dados_pessoais.dart';
 import 'package:nx_flutter_app/src/components/tab/tab_header.dart';
 import 'package:nx_flutter_app/src/components/tab/tab_permissoes.dart';
 import 'package:nx_flutter_app/src/components/wrapper/keep_alive_wrapper.dart';
-import 'package:nx_flutter_app/src/core/services/usuarios_service.dart';
+import 'package:nx_flutter_app/src/core/services/usuarios_provider.dart';
 import 'package:openapi/openapi.dart';
+import 'package:provider/provider.dart';
 
 class CadastroUsuariosPage extends StatefulWidget {
   const CadastroUsuariosPage({Key? key}) : super(key: key);
@@ -76,7 +77,7 @@ class _CadastroUsuariosPageState extends State<CadastroUsuariosPage>
           ..nivel.id = 4
           ..cliente.id = 24,
       );
-      await UsuariosService().postUsuario(usuario);
+      await Provider.of<UsuariosProvider>(context).postUsuario(usuario);
 
       _showMsg('Usuário cadastrado com sucesso', Colors.greenAccent);
 

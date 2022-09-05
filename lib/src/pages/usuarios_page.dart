@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nx_flutter_app/src/components/custom_widgets/app_drawer.dart';
 import 'package:nx_flutter_app/src/components/custom_widgets/info_widget.dart';
 import 'package:nx_flutter_app/src/core/services/http_requests_cache.dart';
-import 'package:nx_flutter_app/src/core/services/usuarios_service.dart';
+import 'package:nx_flutter_app/src/core/services/usuarios_provider.dart';
 import 'package:nx_flutter_app/src/utils/app_routes.dart';
+import 'package:provider/provider.dart';
 
 class UsuariosPage extends StatefulWidget {
   const UsuariosPage({Key? key}) : super(key: key);
@@ -13,10 +14,10 @@ class UsuariosPage extends StatefulWidget {
 }
 
 class _UsuariosPageState extends State<UsuariosPage> {
-  final usuariosApi = UsuariosService();
-
   @override
   Widget build(BuildContext context) {
+    final usuarios = Provider.of<UsuariosProvider>(context, listen: false);
+
     return Scaffold(
       drawer: const AppDrawer(),
       appBar: AppBar(
@@ -37,7 +38,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
         ],
       ),
       body: FutureBuilder(
-        future: usuariosApi.getUsuarios(),
+        future: usuarios.getUsuarios(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -45,13 +46,13 @@ class _UsuariosPageState extends State<UsuariosPage> {
           if (snapshot.hasError) {
             return const Center(child: Text('Ocorreu um erro!'));
           }
-          if (usuariosApi.usuariosCount == 0) {
+          if (usuarios.usuariosCount == 0) {
             return const Center(child: Text('Nenhum usuário cadastrado!'));
           }
           return PageView.builder(
-            itemCount: usuariosApi.usuariosCount,
+            itemCount: usuarios.usuariosCount,
             itemBuilder: (context, index) {
-              final usuario = usuariosApi.usuarios.elementAt(index);
+              final usuario = usuarios.usuarios.elementAt(index);
 
               return Card(
                 margin: const EdgeInsets.symmetric(
@@ -86,6 +87,12 @@ class _UsuariosPageState extends State<UsuariosPage> {
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(AppRoutes.usuariosChart);
+        },
+        child: const Icon(Icons.pie_chart),
       ),
     );
   }

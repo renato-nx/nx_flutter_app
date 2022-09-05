@@ -6,6 +6,7 @@ import 'package:nx_flutter_app/src/core/services/auth_provider.dart';
 import 'package:nx_flutter_app/src/core/services/carrinho_provider.dart';
 import 'package:nx_flutter_app/src/core/services/consulta_provider.dart';
 import 'package:nx_flutter_app/src/core/services/produto/produto_service.dart';
+import 'package:nx_flutter_app/src/core/services/usuarios_provider.dart';
 import 'package:nx_flutter_app/src/pages/auth_or_app_page.dart';
 import 'package:nx_flutter_app/src/pages/agenda_page.dart';
 import 'package:nx_flutter_app/src/pages/cadastro_usuario_page.dart';
@@ -17,6 +18,7 @@ import 'package:nx_flutter_app/src/pages/loja_page.dart';
 import 'package:nx_flutter_app/src/pages/pictogramas_page.dart';
 import 'package:nx_flutter_app/src/pages/produtos_page.dart';
 import 'package:nx_flutter_app/src/pages/signature_page.dart';
+import 'package:nx_flutter_app/src/pages/usuarios_chart_page.dart';
 import 'package:nx_flutter_app/src/pages/usuarios_page.dart';
 import 'package:nx_flutter_app/src/utils/app_routes.dart';
 import 'package:nx_flutter_app/src/core/services/connection_service.dart';
@@ -53,6 +55,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ConsultaProvider()),
         ChangeNotifierProvider(create: (_) => ProdutoService()),
         ChangeNotifierProvider(create: (_) => CarrinhoProvider()),
+        ChangeNotifierProvider(create: (_) => UsuariosProvider()),
       ],
       child: MaterialApp(
         title: 'Grupo Avive',
@@ -98,6 +101,9 @@ class App extends StatelessWidget {
           },
           AppRoutes.cadastroUsuario: (context) {
             return const NoInternetWrapper(CadastroUsuariosPage());
+          },
+          AppRoutes.usuariosChart: (context) {
+            return const NoInternetWrapper(UsuariosChartPage());
           },
         },
       ),
