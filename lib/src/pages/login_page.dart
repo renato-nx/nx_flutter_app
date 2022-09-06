@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nx_flutter_app/src/components/login_form.dart';
+import 'package:nx_flutter_app/src/components/custom_widgets/login_form.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);

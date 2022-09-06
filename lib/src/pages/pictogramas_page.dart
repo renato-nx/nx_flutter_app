@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nx_flutter_app/src/components/custom_widgets/app_drawer.dart';
-import 'package:nx_flutter_app/src/components/pictogramas_list.dart';
+import 'package:nx_flutter_app/src/components/custom_widgets/pictogramas_list.dart';
 import 'package:nx_flutter_app/src/core/services/pictogramas_service.dart';
 
 class PictogramasPage extends StatelessWidget {

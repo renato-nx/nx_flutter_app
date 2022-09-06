@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nx_flutter_app/src/components/pie_chart_widget.dart';
+import 'package:nx_flutter_app/src/components/custom_widgets/pie_chart_widget.dart';
 import 'package:nx_flutter_app/src/core/models/chart_section.dart';
 import 'package:nx_flutter_app/src/core/services/usuarios_provider.dart';
 import 'package:provider/provider.dart';
@@ -15,8 +15,6 @@ class _UsuariosChartPageState extends State<UsuariosChartPage> {
   @override
   Widget build(BuildContext context) {
     final usuarios = Provider.of<UsuariosProvider>(context, listen: false);
-
-
 
     final data = [
       ChartSection(
