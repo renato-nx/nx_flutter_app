@@ -68,10 +68,6 @@ class _CadastroUsuariosPageState extends State<CadastroUsuariosPage>
           ..telefone = formData['telefone']
           ..ramal = formData['ramal']
           ..celular = formData['celular']
-          ..visualizarImprimirRtpi = formData['visualizarImprimirRtpi']
-          ..criarEditarRtpi = formData['criarEditarRtpi']
-          ..criarEditarCadastro = formData['criarEditarCadastro']
-          ..imprimirEtiqueta = formData['imprimirEtiqueta']
           ..credencial.login = formData['login']
           ..credencial.senha = formData['senha']
           ..nivel.id = 4

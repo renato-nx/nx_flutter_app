@@ -26,7 +26,7 @@ abstract class Credencial implements Built<Credencial, CredencialBuilder> {
     String? get senha;
 
     @BuiltValueField(wireName: r'roles')
-    BuiltList<NivelRolesEnum>? get roles;
+    BuiltList<NivelRolesCredencialEnum>? get roles;
     // enum rolesEnum {  ADMIN,  USUARIO_LEITURA,  USUARIO_ESCRITA,  };
 
     Credencial._();
@@ -73,7 +73,7 @@ class _$CredencialSerializer implements StructuredSerializer<Credencial> {
             result
                 ..add(r'roles')
                 ..add(serializers.serialize(object.roles,
-                    specifiedType: const FullType(BuiltList, [FullType(NivelRolesEnum)])));
+                    specifiedType: const FullType(BuiltList, [FullType(NivelRolesCredencialEnum)])));
         }
         return result;
     }
@@ -107,7 +107,7 @@ class _$CredencialSerializer implements StructuredSerializer<Credencial> {
                     break;
                 case r'roles':
                     final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(BuiltList, [FullType(NivelRolesEnum)])) as BuiltList<NivelRolesEnum>;
+                        specifiedType: const FullType(BuiltList, [FullType(NivelRolesCredencialEnum)])) as BuiltList<NivelRolesCredencialEnum>;
                     result.roles.replace(valueDes);
                     break;
             }
@@ -116,20 +116,20 @@ class _$CredencialSerializer implements StructuredSerializer<Credencial> {
     }
 }
 
-class NivelRolesEnum extends EnumClass {
+class NivelRolesCredencialEnum extends EnumClass {
 
   @BuiltValueEnumConst(wireName: r'ADMIN')
-  static const NivelRolesEnum ADMIN = _$nivelRolesEnum_ADMIN;
+  static const NivelRolesCredencialEnum ADMIN = _$nivelRolesEnum_ADMIN;
   @BuiltValueEnumConst(wireName: r'USUARIO_LEITURA')
-  static const NivelRolesEnum USUARIO_LEITURA = _$nivelRolesEnum_USUARIO_LEITURA;
+  static const NivelRolesCredencialEnum USUARIO_LEITURA = _$nivelRolesEnum_USUARIO_LEITURA;
   @BuiltValueEnumConst(wireName: r'USUARIO_ESCRITA')
-  static const NivelRolesEnum USUARIO_ESCRITA = _$nivelRolesEnum_USUARIO_ESCRITA;
+  static const NivelRolesCredencialEnum USUARIO_ESCRITA = _$nivelRolesEnum_USUARIO_ESCRITA;
 
-  static Serializer<NivelRolesEnum> get serializer => _$nivelRolesEnumSerializer;
+  static Serializer<NivelRolesCredencialEnum> get serializer => _$nivelRolesEnumSerializer;
 
-  const NivelRolesEnum._(String name): super(name);
+  const NivelRolesCredencialEnum._(String name): super(name);
 
-  static BuiltSet<NivelRolesEnum> get values => _$nivelRolesEnumValues;
-  static NivelRolesEnum valueOf(String name) => _$nivelRolesEnumValueOf(name);
+  static BuiltSet<NivelRolesCredencialEnum> get values => _$nivelRolesEnumValues;
+  static NivelRolesCredencialEnum valueOf(String name) => _$nivelRolesEnumValueOf(name);
 }
 
