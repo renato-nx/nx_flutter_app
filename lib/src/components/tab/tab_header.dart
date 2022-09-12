@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class TabHeader extends StatelessWidget {
   final bool isValid;
-  final IconData icon;
+  final Widget? icon;
   final String title;
 
   const TabHeader({
     Key? key,
     required this.isValid,
-    required this.icon,
     required this.title,
+    this.icon,
   }) : super(key: key);
 
   @override
@@ -17,7 +17,7 @@ class TabHeader extends StatelessWidget {
     return Stack(
       children: [
         Tab(
-          icon: Icon(icon),
+          icon: icon,
           text: title,
         ),
         if (!isValid)

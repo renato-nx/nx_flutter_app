@@ -163,17 +163,17 @@ class _CadastroUsuariosPageState extends State<CadastroUsuariosPage>
             tabs: [
               TabHeader(
                 isValid: form1IsValid,
-                icon: Icons.person,
+                icon: const Icon(Icons.person),
                 title: 'Dados Pessoais',
               ),
               TabHeader(
                 isValid: form2IsValid,
-                icon: Icons.phone,
+                icon: const Icon(Icons.phone),
                 title: 'Contatos',
               ),
               TabHeader(
                 isValid: form3IsValid,
-                icon: Icons.assignment,
+                icon: const Icon(Icons.assignment),
                 title: 'Permissões',
               ),
             ],
