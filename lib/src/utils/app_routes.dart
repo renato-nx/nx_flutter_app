@@ -12,4 +12,6 @@ class AppRoutes {
   static const produtoDetail = 'produto-detail';
   static const cart = 'cart';
   static const assinatura = 'assinatura';
+  static const vendas = 'vendas';
+  static const novaVenda = 'nova-venda';
 }

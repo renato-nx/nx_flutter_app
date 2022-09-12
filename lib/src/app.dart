@@ -7,9 +7,11 @@ import 'package:nx_flutter_app/src/core/services/carrinho_provider.dart';
 import 'package:nx_flutter_app/src/core/services/consulta_provider.dart';
 import 'package:nx_flutter_app/src/core/services/produto/produto_service.dart';
 import 'package:nx_flutter_app/src/core/services/usuarios_provider.dart';
+import 'package:nx_flutter_app/src/core/services/vendas_provider.dart';
 import 'package:nx_flutter_app/src/pages/auth_or_app_page.dart';
 import 'package:nx_flutter_app/src/pages/agenda_page.dart';
 import 'package:nx_flutter_app/src/pages/cadastro_usuario_page.dart';
+import 'package:nx_flutter_app/src/pages/cadastro_venda_page.dart';
 import 'package:nx_flutter_app/src/pages/carrinho_page.dart';
 import 'package:nx_flutter_app/src/pages/notification_page.dart';
 import 'package:nx_flutter_app/src/pages/produto_details_page.dart';
@@ -20,6 +22,7 @@ import 'package:nx_flutter_app/src/pages/produtos_page.dart';
 import 'package:nx_flutter_app/src/pages/signature_page.dart';
 import 'package:nx_flutter_app/src/pages/usuarios_chart_page.dart';
 import 'package:nx_flutter_app/src/pages/usuarios_page.dart';
+import 'package:nx_flutter_app/src/pages/vendas_page.dart';
 import 'package:nx_flutter_app/src/utils/app_routes.dart';
 import 'package:nx_flutter_app/src/core/services/connection_service.dart';
 import 'package:provider/provider.dart';
@@ -56,6 +59,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProdutoService()),
         ChangeNotifierProvider(create: (_) => CarrinhoProvider()),
         ChangeNotifierProvider(create: (_) => UsuariosProvider()),
+        ChangeNotifierProvider(create: (_) => VendasProvider()),
       ],
       child: MaterialApp(
         title: 'Grupo Avive',
@@ -104,6 +108,12 @@ class App extends StatelessWidget {
           },
           AppRoutes.usuariosChart: (context) {
             return const NoInternetWrapper(UsuariosChartPage());
+          },
+          AppRoutes.vendas: (context) {
+            return const NoInternetWrapper(VendasPage());
+          },
+          AppRoutes.novaVenda: (context) {
+            return const NoInternetWrapper(CadastroVendaPage());
           },
         },
       ),
