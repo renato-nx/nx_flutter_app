@@ -10,11 +10,13 @@ class _$UsuarioIdioma extends UsuarioIdioma {
   @override
   final String? language;
   @override
-  final String? script;
+  final String? displayName;
+  @override
+  final String? country;
   @override
   final String? variant;
   @override
-  final String? country;
+  final String? script;
   @override
   final BuiltSet<String>? unicodeLocaleAttributes;
   @override
@@ -28,8 +30,6 @@ class _$UsuarioIdioma extends UsuarioIdioma {
   @override
   final String? displayVariant;
   @override
-  final String? displayName;
-  @override
   final BuiltSet<String>? extensionKeys;
   @override
   final String? iso3Language;
@@ -41,16 +41,16 @@ class _$UsuarioIdioma extends UsuarioIdioma {
 
   _$UsuarioIdioma._(
       {this.language,
-      this.script,
-      this.variant,
+      this.displayName,
       this.country,
+      this.variant,
+      this.script,
       this.unicodeLocaleAttributes,
       this.unicodeLocaleKeys,
       this.displayLanguage,
       this.displayScript,
       this.displayCountry,
       this.displayVariant,
-      this.displayName,
       this.extensionKeys,
       this.iso3Language,
       this.iso3Country})
@@ -68,16 +68,16 @@ class _$UsuarioIdioma extends UsuarioIdioma {
     if (identical(other, this)) return true;
     return other is UsuarioIdioma &&
         language == other.language &&
-        script == other.script &&
-        variant == other.variant &&
+        displayName == other.displayName &&
         country == other.country &&
+        variant == other.variant &&
+        script == other.script &&
         unicodeLocaleAttributes == other.unicodeLocaleAttributes &&
         unicodeLocaleKeys == other.unicodeLocaleKeys &&
         displayLanguage == other.displayLanguage &&
         displayScript == other.displayScript &&
         displayCountry == other.displayCountry &&
         displayVariant == other.displayVariant &&
-        displayName == other.displayName &&
         extensionKeys == other.extensionKeys &&
         iso3Language == other.iso3Language &&
         iso3Country == other.iso3Country;
@@ -100,16 +100,16 @@ class _$UsuarioIdioma extends UsuarioIdioma {
                                                     $jc(
                                                         $jc(0,
                                                             language.hashCode),
-                                                        script.hashCode),
-                                                    variant.hashCode),
-                                                country.hashCode),
-                                            unicodeLocaleAttributes.hashCode),
-                                        unicodeLocaleKeys.hashCode),
-                                    displayLanguage.hashCode),
-                                displayScript.hashCode),
-                            displayCountry.hashCode),
-                        displayVariant.hashCode),
-                    displayName.hashCode),
+                                                        displayName.hashCode),
+                                                    country.hashCode),
+                                                variant.hashCode),
+                                            script.hashCode),
+                                        unicodeLocaleAttributes.hashCode),
+                                    unicodeLocaleKeys.hashCode),
+                                displayLanguage.hashCode),
+                            displayScript.hashCode),
+                        displayCountry.hashCode),
+                    displayVariant.hashCode),
                 extensionKeys.hashCode),
             iso3Language.hashCode),
         iso3Country.hashCode));
@@ -119,16 +119,16 @@ class _$UsuarioIdioma extends UsuarioIdioma {
   String toString() {
     return (newBuiltValueToStringHelper(r'UsuarioIdioma')
           ..add('language', language)
-          ..add('script', script)
-          ..add('variant', variant)
+          ..add('displayName', displayName)
           ..add('country', country)
+          ..add('variant', variant)
+          ..add('script', script)
           ..add('unicodeLocaleAttributes', unicodeLocaleAttributes)
           ..add('unicodeLocaleKeys', unicodeLocaleKeys)
           ..add('displayLanguage', displayLanguage)
           ..add('displayScript', displayScript)
           ..add('displayCountry', displayCountry)
           ..add('displayVariant', displayVariant)
-          ..add('displayName', displayName)
           ..add('extensionKeys', extensionKeys)
           ..add('iso3Language', iso3Language)
           ..add('iso3Country', iso3Country))
@@ -144,17 +144,21 @@ class UsuarioIdiomaBuilder
   String? get language => _$this._language;
   set language(String? language) => _$this._language = language;
 
-  String? _script;
-  String? get script => _$this._script;
-  set script(String? script) => _$this._script = script;
+  String? _displayName;
+  String? get displayName => _$this._displayName;
+  set displayName(String? displayName) => _$this._displayName = displayName;
+
+  String? _country;
+  String? get country => _$this._country;
+  set country(String? country) => _$this._country = country;
 
   String? _variant;
   String? get variant => _$this._variant;
   set variant(String? variant) => _$this._variant = variant;
 
-  String? _country;
-  String? get country => _$this._country;
-  set country(String? country) => _$this._country = country;
+  String? _script;
+  String? get script => _$this._script;
+  set script(String? script) => _$this._script = script;
 
   SetBuilder<String>? _unicodeLocaleAttributes;
   SetBuilder<String> get unicodeLocaleAttributes =>
@@ -188,10 +192,6 @@ class UsuarioIdiomaBuilder
   set displayVariant(String? displayVariant) =>
       _$this._displayVariant = displayVariant;
 
-  String? _displayName;
-  String? get displayName => _$this._displayName;
-  set displayName(String? displayName) => _$this._displayName = displayName;
-
   SetBuilder<String>? _extensionKeys;
   SetBuilder<String> get extensionKeys =>
       _$this._extensionKeys ??= new SetBuilder<String>();
@@ -214,16 +214,16 @@ class UsuarioIdiomaBuilder
     final $v = _$v;
     if ($v != null) {
       _language = $v.language;
-      _script = $v.script;
-      _variant = $v.variant;
+      _displayName = $v.displayName;
       _country = $v.country;
+      _variant = $v.variant;
+      _script = $v.script;
       _unicodeLocaleAttributes = $v.unicodeLocaleAttributes?.toBuilder();
       _unicodeLocaleKeys = $v.unicodeLocaleKeys?.toBuilder();
       _displayLanguage = $v.displayLanguage;
       _displayScript = $v.displayScript;
       _displayCountry = $v.displayCountry;
       _displayVariant = $v.displayVariant;
-      _displayName = $v.displayName;
       _extensionKeys = $v.extensionKeys?.toBuilder();
       _iso3Language = $v.iso3Language;
       _iso3Country = $v.iso3Country;
@@ -252,16 +252,16 @@ class UsuarioIdiomaBuilder
       _$result = _$v ??
           new _$UsuarioIdioma._(
               language: language,
-              script: script,
-              variant: variant,
+              displayName: displayName,
               country: country,
+              variant: variant,
+              script: script,
               unicodeLocaleAttributes: _unicodeLocaleAttributes?.build(),
               unicodeLocaleKeys: _unicodeLocaleKeys?.build(),
               displayLanguage: displayLanguage,
               displayScript: displayScript,
               displayCountry: displayCountry,
               displayVariant: displayVariant,
-              displayName: displayName,
               extensionKeys: _extensionKeys?.build(),
               iso3Language: iso3Language,
               iso3Country: iso3Country);

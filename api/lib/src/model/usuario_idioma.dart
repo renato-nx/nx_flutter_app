@@ -12,16 +12,16 @@ part 'usuario_idioma.g.dart';
 ///
 /// Properties:
 /// * [language] 
-/// * [script] 
-/// * [variant] 
+/// * [displayName] 
 /// * [country] 
+/// * [variant] 
+/// * [script] 
 /// * [unicodeLocaleAttributes] 
 /// * [unicodeLocaleKeys] 
 /// * [displayLanguage] 
 /// * [displayScript] 
 /// * [displayCountry] 
 /// * [displayVariant] 
-/// * [displayName] 
 /// * [extensionKeys] 
 /// * [iso3Language] 
 /// * [iso3Country] 
@@ -29,14 +29,17 @@ abstract class UsuarioIdioma implements Built<UsuarioIdioma, UsuarioIdiomaBuilde
     @BuiltValueField(wireName: r'language')
     String? get language;
 
-    @BuiltValueField(wireName: r'script')
-    String? get script;
+    @BuiltValueField(wireName: r'displayName')
+    String? get displayName;
+
+    @BuiltValueField(wireName: r'country')
+    String? get country;
 
     @BuiltValueField(wireName: r'variant')
     String? get variant;
 
-    @BuiltValueField(wireName: r'country')
-    String? get country;
+    @BuiltValueField(wireName: r'script')
+    String? get script;
 
     @BuiltValueField(wireName: r'unicodeLocaleAttributes')
     BuiltSet<String>? get unicodeLocaleAttributes;
@@ -55,9 +58,6 @@ abstract class UsuarioIdioma implements Built<UsuarioIdioma, UsuarioIdiomaBuilde
 
     @BuiltValueField(wireName: r'displayVariant')
     String? get displayVariant;
-
-    @BuiltValueField(wireName: r'displayName')
-    String? get displayName;
 
     @BuiltValueField(wireName: r'extensionKeys')
     BuiltSet<String>? get extensionKeys;
@@ -96,10 +96,16 @@ class _$UsuarioIdiomaSerializer implements StructuredSerializer<UsuarioIdioma> {
                 ..add(serializers.serialize(object.language,
                     specifiedType: const FullType(String)));
         }
-        if (object.script != null) {
+        if (object.displayName != null) {
             result
-                ..add(r'script')
-                ..add(serializers.serialize(object.script,
+                ..add(r'displayName')
+                ..add(serializers.serialize(object.displayName,
+                    specifiedType: const FullType(String)));
+        }
+        if (object.country != null) {
+            result
+                ..add(r'country')
+                ..add(serializers.serialize(object.country,
                     specifiedType: const FullType(String)));
         }
         if (object.variant != null) {
@@ -108,10 +114,10 @@ class _$UsuarioIdiomaSerializer implements StructuredSerializer<UsuarioIdioma> {
                 ..add(serializers.serialize(object.variant,
                     specifiedType: const FullType(String)));
         }
-        if (object.country != null) {
+        if (object.script != null) {
             result
-                ..add(r'country')
-                ..add(serializers.serialize(object.country,
+                ..add(r'script')
+                ..add(serializers.serialize(object.script,
                     specifiedType: const FullType(String)));
         }
         if (object.unicodeLocaleAttributes != null) {
@@ -148,12 +154,6 @@ class _$UsuarioIdiomaSerializer implements StructuredSerializer<UsuarioIdioma> {
             result
                 ..add(r'displayVariant')
                 ..add(serializers.serialize(object.displayVariant,
-                    specifiedType: const FullType(String)));
-        }
-        if (object.displayName != null) {
-            result
-                ..add(r'displayName')
-                ..add(serializers.serialize(object.displayName,
                     specifiedType: const FullType(String)));
         }
         if (object.extensionKeys != null) {
@@ -194,20 +194,25 @@ class _$UsuarioIdiomaSerializer implements StructuredSerializer<UsuarioIdioma> {
                         specifiedType: const FullType(String)) as String;
                     result.language = valueDes;
                     break;
-                case r'script':
+                case r'displayName':
                     final valueDes = serializers.deserialize(value,
                         specifiedType: const FullType(String)) as String;
-                    result.script = valueDes;
+                    result.displayName = valueDes;
+                    break;
+                case r'country':
+                    final valueDes = serializers.deserialize(value,
+                        specifiedType: const FullType(String)) as String;
+                    result.country = valueDes;
                     break;
                 case r'variant':
                     final valueDes = serializers.deserialize(value,
                         specifiedType: const FullType(String)) as String;
                     result.variant = valueDes;
                     break;
-                case r'country':
+                case r'script':
                     final valueDes = serializers.deserialize(value,
                         specifiedType: const FullType(String)) as String;
-                    result.country = valueDes;
+                    result.script = valueDes;
                     break;
                 case r'unicodeLocaleAttributes':
                     final valueDes = serializers.deserialize(value,
@@ -238,11 +243,6 @@ class _$UsuarioIdiomaSerializer implements StructuredSerializer<UsuarioIdioma> {
                     final valueDes = serializers.deserialize(value,
                         specifiedType: const FullType(String)) as String;
                     result.displayVariant = valueDes;
-                    break;
-                case r'displayName':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.displayName = valueDes;
                     break;
                 case r'extensionKeys':
                     final valueDes = serializers.deserialize(value,
