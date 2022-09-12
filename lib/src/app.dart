@@ -19,7 +19,7 @@ import 'package:nx_flutter_app/src/pages/produto_form_page.dart';
 import 'package:nx_flutter_app/src/pages/loja_page.dart';
 import 'package:nx_flutter_app/src/pages/pictogramas_page.dart';
 import 'package:nx_flutter_app/src/pages/produtos_page.dart';
-import 'package:nx_flutter_app/src/pages/signature_page.dart';
+import 'package:nx_flutter_app/src/pages/assinatura_page.dart';
 import 'package:nx_flutter_app/src/pages/usuarios_chart_page.dart';
 import 'package:nx_flutter_app/src/pages/usuarios_page.dart';
 import 'package:nx_flutter_app/src/pages/vendas_page.dart';
@@ -101,7 +101,7 @@ class App extends StatelessWidget {
             return const NoInternetWrapper(CarrinhoPage());
           },
           AppRoutes.assinatura: (context) {
-            return const NoInternetWrapper(SignaturePage());
+            return const NoInternetWrapper(AssinaturaPage());
           },
           AppRoutes.cadastroUsuario: (context) {
             return const NoInternetWrapper(CadastroUsuariosPage());

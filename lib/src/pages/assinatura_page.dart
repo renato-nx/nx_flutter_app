@@ -1,11 +1,6 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:nx_flutter_app/src/components/custom_widgets/app_drawer.dart';
-import 'package:nx_flutter_app/src/components/custom_widgets/painter.dart';
-import 'dart:ui' as ui;
-import 'package:nx_flutter_app/src/core/models/touch_points.dart';
+import 'package:signature/signature.dart';
 import 'package:nx_flutter_app/src/pages/visualizar_page.dart';
 
 class AssinaturaPage extends StatefulWidget {
@@ -16,40 +11,37 @@ class AssinaturaPage extends StatefulWidget {
 }
 
 class _AssinaturaPageState extends State<AssinaturaPage> {
-  GlobalKey globalKey = GlobalKey();
+  final SignatureController _controller = SignatureController();
 
-  List<TouchPoints?> points = [];
-
-  StrokeCap strokeType = StrokeCap.round;
-  double strokeWidth = 3.0;
-  Color selectedColor = Colors.black;
-  double opacity = 1.0;
-
-  TouchPoints _criarTouchPoints(renderBox, details) {
-    return TouchPoints(
-      offset: renderBox.globalToLocal(details.globalPosition),
-      paint: Paint()
-        ..strokeCap = strokeType
-        ..isAntiAlias = true
-        ..color = selectedColor.withOpacity(opacity)
-        ..strokeWidth = strokeWidth,
+  void _showMessage(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg)),
     );
   }
 
-  void _visualizar(context) async {
-    final RenderRepaintBoundary boundary =
-        globalKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
-    final ui.Image image = await boundary.toImage();
-    final ByteData? byteData =
-        await image.toByteData(format: ui.ImageByteFormat.png);
-    final Uint8List pngBytes = byteData!.buffer.asUint8List();
+  void _exportImage(context) async {
+    if (_controller.isEmpty) {
+      _showMessage('Nenhum conteúdo');
+      return;
+    }
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext context) => VisualizarPage(pngBytes),
-      ),
-    );
+    try {
+      final imagemAssinatura = await _controller.toPngBytes();
+
+      if (imagemAssinatura == null) {
+        _showMessage('Erro ao salvar assinatura');
+        return;
+      }
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => VisualizarPage(imagemAssinatura),
+        ),
+      );
+    } catch (error) {
+      _showMessage('Erro ao salvar assinatura');
+    }
   }
 
   @override
@@ -57,37 +49,39 @@ class _AssinaturaPageState extends State<AssinaturaPage> {
     return Scaffold(
       drawer: const AppDrawer(),
       appBar: AppBar(
-        title: const Text('Assinatura'),
-      ),
-      body: GestureDetector(
-        onPanUpdate: (details) {
-          setState(() {
-            RenderObject? renderBox = context.findRenderObject();
-            points.add(_criarTouchPoints(renderBox, details));
-          });
-        },
-        onPanStart: (details) {
-          setState(() {
-            RenderObject? renderBox = context.findRenderObject();
-            points.add(_criarTouchPoints(renderBox, details));
-          });
-        },
-        onPanEnd: (details) {
-          setState(() {
-            points.add(null);
-          });
-        },
-        child: RepaintBoundary(
-          key: globalKey,
-          child: CustomPaint(
-            size: Size.infinite,
-            painter: Painter(pointsList: points),
+        title: const Text('Assinar'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.clear),
+            onPressed: () {
+              setState(() => _controller.clear());
+            },
           ),
+          IconButton(
+            onPressed: () {
+              setState(() => _controller.undo());
+            },
+            icon: const Icon(Icons.undo),
+          ),
+          IconButton(
+            onPressed: () {
+              setState(() => _controller.redo());
+            },
+            icon: const Icon(Icons.redo),
+          ),
+        ],
+      ),
+      body: Container(
+        color: Colors.blue.shade50,
+        child: Signature(
+          controller: _controller,
+          backgroundColor: Colors.white,
+          height: 500,
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _visualizar(context);
+          _exportImage(context);
         },
         child: const Icon(Icons.save),
       ),
